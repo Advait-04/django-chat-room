@@ -19,6 +19,14 @@ def index(request):
 
 
 def login(request):
+    if request.method == "POST":
+        username = request.POST.get("username")
+        password = request.POST.get("password")
+
+        user = User.objects.get(username=username, password=password)
+
+        curr_user = user.username
+
     return render(request, "login.html")
 
 
