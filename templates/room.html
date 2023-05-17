@@ -31,22 +31,28 @@
         <main class="p-4">
             <div class="chat-window">
                 <div class="chat-header">
-                    <h3>{{room}}</h3>
+                    <h3 class="room-name">{{room}}</h3>
                 </div>
-                <div class="message-div p-2">
+                <div class="message-div p-2 mt-2">
                     <p class="sender">Tom</p>
                     <p class="message">Blah Blah Blah</p>
                     <p class="msg-time">24th Aug</p>
                 </div>
             </div>
-            <div class="form-div">
-                <form method="post" action="/send">
+            <div class="form-div mt-2">
+                <form id="post-form" method="post" action="/send">
                     {% csrf_token %}
                     <input
                         type="hidden"
                         name="username"
                         id="username"
                         value="{{username}}"
+                    />
+                    <input
+                        type="hidden"
+                        name="room"
+                        id="room"
+                        value="{{room}}"
                     />
                     <input
                         type="hidden"
@@ -66,5 +72,31 @@
                 </form>
             </div>
         </main>
+        <script>
+            const getMessages = async () => {
+                await fetch("/getmessages/{{room}}/", {
+                    method: "GET",
+                })
+                    .then((res) => res.json())
+                    .then((res) => {
+                        res.messages.map((msg) => {
+                            const divCode = `
+                            <div class="message-div p-2 mt-2">
+                                <p class="sender">${msg.user}</p>
+                                <p class="message">${msg.value}</p>
+                                <p class="msg-time">${msg.date}</p>
+                            </div>                            
+                            `;
+
+                            const chatWindow =
+                                document.querySelector(".chat-window");
+
+                            chatWindow.innerHTML += divCode;
+                        });
+                    });
+            };
+
+            getMessages();
+        </script>
     </body>
 </html>

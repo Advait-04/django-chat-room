@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
-from chat.models import User
+from django.http import HttpResponse, JsonResponse
+from chat.models import User, Room, Message
 
 import random
 
@@ -55,3 +55,52 @@ def demo_chat(request):
     }
 
     return render(request, "demo-chat.html", user_dict)
+
+
+def home(request):
+    home_dict = {"username": curr_user}
+
+    return render(request, "home.html", home_dict)
+
+
+def room(request, room):
+    username = request.GET.get("username")
+    room_details = Room.objects.get(name=room)
+    return render(
+        request,
+        "room.html",
+        {"username": username, "room": room, "room_details": room_details},
+    )
+
+
+def checkview(request):
+    print("hello")
+
+    room = request.POST.get("room")
+    username = curr_user
+
+    if Room.objects.filter(name=room).exists():
+        return redirect("/" + room + "/?username=" + username)
+    else:
+        new_room = Room.objects.create(name=room)
+        new_room.save()
+        return redirect("/" + room + "/?username=" + username)
+
+
+def send(request):
+    message = request.POST.get("message")
+    room_id = request.POST.get("room_id")
+    username = request.POST.get("username")
+    room = request.POST.get("room")
+
+    new_message = Message.objects.create(value=message, user=username, room=room_id)
+    new_message.save()
+
+    return redirect("/" + room + "/?username=" + username)
+
+
+def getmessages(request, room):
+    room_details = Room.objects.get(name=room)
+    messages = Message.objects.filter(room=room_details.id)
+
+    return JsonResponse({"messages": list(messages.values())})

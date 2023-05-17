@@ -1,0 +1,66 @@
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    width: 100vw;
+    height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    font-family: "JetBrains Mono";
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+
+    width: 90%;
+    height: 90%;
+}
+
+.chat-header {
+    text-align: center;
+}
+
+.room-name {
+    display: inline-block;
+}
+
+.chat-window {
+    width: 100%;
+    height: 95%;
+
+    overflow-y: scroll;
+}
+
+.chat-window::-webkit-scrollbar {
+    display: none;
+}
+
+.message-div {
+    background-color: whitesmoke;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.form-div {
+    width: 100%;
+    height: 5%;
+}
+
+#message {
+    width: 95%;
+}
+
+.msg-div {
+    display: flex;
+    gap: 1rem;
+}
