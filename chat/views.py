@@ -43,6 +43,9 @@ def signup(request):
         password = request.POST.get("password")
         username = f"{fname}_{generate_code()}"
 
+        if User.objects.filter(username=username):
+            username = f"{fname}_{generate_code()}"
+
         user = User(fname=fname, username=username, password=password)
         user.save()
 

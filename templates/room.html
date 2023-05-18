@@ -28,19 +28,31 @@
         <title>room</title>
     </head>
     <body>
-        <main class="p-4">
+        <main class="p-3">
             <div class="chat-window">
-                <div class="chat-header">
+                <div class="chat-header p-2">
                     <h3 class="room-name">{{room}}</h3>
+                    <div class="nav-buttons">
+                        <a href="{% url 'home' %}?username={{username}}">
+                            <button type="button" class="btn btn-warning">
+                                Home
+                            </button>
+                        </a>
+                        <a href="{% url 'index' %}">
+                            <button type="button" class="btn btn-danger">
+                                Sign Out
+                            </button>
+                        </a>
+                    </div>
                 </div>
-                <div class="chat-box"></div>
+                <div class="chat-box mt-1"></div>
                 <!-- <div class="message-div p-2 mt-2">
                     <p class="sender">Tom</p>
                     <p class="message">Blah Blah Blah</p>
                     <p class="msg-time">24th Aug</p>
                 </div> -->
             </div>
-            <div class="form-div mt-2">
+            <div class="form-div mt-3">
                 <form id="post-form">
                     {% csrf_token %}
                     <input
@@ -61,7 +73,7 @@
                         id="room_id"
                         value="{{room_details.id}}"
                     />
-                    <div class="msg-div">
+                    <div class="msg-div mt-1">
                         <input
                             type="text"
                             id="message"
