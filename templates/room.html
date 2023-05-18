@@ -33,14 +33,15 @@
                 <div class="chat-header">
                     <h3 class="room-name">{{room}}</h3>
                 </div>
-                <div class="message-div p-2 mt-2">
+                <div class="chat-box"></div>
+                <!-- <div class="message-div p-2 mt-2">
                     <p class="sender">Tom</p>
                     <p class="message">Blah Blah Blah</p>
                     <p class="msg-time">24th Aug</p>
-                </div>
+                </div> -->
             </div>
             <div class="form-div mt-2">
-                <form id="post-form" method="post" action="/send">
+                <form id="post-form">
                     {% csrf_token %}
                     <input
                         type="hidden"
@@ -73,30 +74,63 @@
             </div>
         </main>
         <script>
-            const getMessages = async () => {
-                await fetch("/getmessages/{{room}}/", {
-                    method: "GET",
-                })
-                    .then((res) => res.json())
-                    .then((res) => {
-                        res.messages.map((msg) => {
-                            const divCode = `
-                            <div class="message-div p-2 mt-2">
-                                <p class="sender">${msg.user}</p>
-                                <p class="message">${msg.value}</p>
-                                <p class="msg-time">${msg.date}</p>
-                            </div>                            
+            $(document).ready(function () {
+                setInterval(function () {
+                    $.ajax({
+                        type: "GET",
+                        url: "/getmessages/{{room}}/",
+                        success: function (response) {
+                            console.log(response);
+                            $(".chat-box").empty();
+
+                            const header = `
+                            <div class="chat-header">
+                                <h3 class="room-name">{{room}}</h3>
+                            </div>
                             `;
 
-                            const chatWindow =
-                                document.querySelector(".chat-window");
+                            // $(".chat-window").append(header);
+                            for (var key in response.messages) {
+                                var divCode = `
+                                <div class="message-div p-2 mt-2">
+                                    <p class="sender">${response.messages[key].user}</p>
+                                    <p class="message">${response.messages[key].value}</p>
+                                    <p class="msg-time">${response.messages[key].date}</p>
+                                </div>
+                                `;
 
-                            chatWindow.innerHTML += divCode;
-                        });
+                                $(".chat-box").append(divCode);
+                            }
+                        },
+                        error: function (response) {
+                            console.log(response);
+                        },
                     });
-            };
+                }, 1000);
+            });
 
-            getMessages();
+            $(document).on("submit", "#post-form", function (e) {
+                e.preventDefault();
+
+                $.ajax({
+                    type: "POST",
+                    url: "/send",
+                    data: {
+                        username: $("#username").val(),
+                        room_id: $("#room_id").val(),
+                        message: $("#message").val(),
+                        csrfmiddlewaretoken: $(
+                            "input[name=csrfmiddlewaretoken]"
+                        ).val(),
+                    },
+                    success: function (data) {
+                        //alert(data)
+                    },
+                });
+                document.getElementById("message").value = "";
+            });
+
+            // setInterval(getMessages, 1000);
         </script>
     </body>
 </html>

@@ -26,6 +26,7 @@ main {
 }
 
 .chat-header {
+    height: 5%;
     text-align: center;
 }
 
@@ -36,8 +37,6 @@ main {
 .chat-window {
     width: 100%;
     height: 95%;
-
-    overflow-y: scroll;
 }
 
 .chat-window::-webkit-scrollbar {
