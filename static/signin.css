@@ -35,9 +35,25 @@ form {
     color: red;
 }
 
+@media screen and (min-width: 768px) {
+    .main-div {
+        width: 40% !important;
+    }
+}
+
+@media screen and (min-width: 1024px) {
+    .main-div {
+        width: 30% !important;
+    }
+}
+
 @media screen and (min-width: 1400px) {
     body {
         padding-left: 15rem;
         padding-right: 15rem;
+    }
+
+    .main-div {
+        width: 25% !important;
     }
 }

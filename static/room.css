@@ -81,3 +81,18 @@ a {
     display: flex;
     gap: 1rem;
 }
+
+@media screen and (max-width: 374px) {
+    .chat-header {
+        justify-content: flex-start;
+        align-items: center;
+    }
+
+    .room-name {
+        margin: none;
+    }
+
+    .nav-buttons button {
+        font-size: 10px;
+    }
+}

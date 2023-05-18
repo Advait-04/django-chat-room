@@ -29,14 +29,30 @@ form {
     text-align: start;
 }
 
+h5 {
+    font-size: smaller;
+    align-self: flex-end;
+}
+
+@media screen and (min-width: 768px) {
+    .main-div {
+        width: 40% !important;
+    }
+}
+
+@media screen and (min-width: 1024px) {
+    .main-div {
+        width: 30% !important;
+    }
+}
+
 @media screen and (min-width: 1400px) {
     body {
         padding-left: 15rem;
         padding-right: 15rem;
     }
-}
 
-h5 {
-    font-size: smaller;
-    align-self: flex-end;
+    .main-div {
+        width: 25% !important;
+    }
 }
