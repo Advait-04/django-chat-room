@@ -32,6 +32,12 @@
         <div class="title-div">
             <h1>Welcome to the chat room app</h1>
             <h3>Login or sign up to continue</h3>
+            <p class="fs-6 desc mt-2">
+                This is a chatroom app where you can chat with people inside the
+                same room. Once you sign up/login you can enter the name of a
+                room, if the room is not already present new one will be
+                created.
+            </p>
         </div>
         <div class="bt-div w-75 h-50 mt-4">
             <a href="{% url 'login' %}">
@@ -40,8 +46,8 @@
             <a href="{% url 'signup' %}"
                 ><button type="button" class="btn btn-primary mt-3">
                     Sign Up
-                </button></a
-            >
+                </button>
+            </a>
         </div>
 
         <script
